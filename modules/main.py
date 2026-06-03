@@ -1124,6 +1124,13 @@ async def _run_forever():
 
 
 if __name__ == "__main__":
+    # Delete corrupted session files from previous crashes
+    for _sf in ["bot.session", "bot.session-journal"]:
+        try:
+            if os.path.exists(_sf):
+                os.remove(_sf)
+        except Exception:
+            pass
     requests.post(f"https://api.telegram.org/bot{BOT_TOKEN}/deleteWebhook")
     reset_and_set_commands()
     notify_owner()
